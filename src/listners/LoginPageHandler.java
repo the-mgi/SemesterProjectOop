@@ -1,5 +1,6 @@
 package listners;
 
+import GUIs.SignUpPage;
 import GUIs.loginPage;
 
 import java.awt.event.ActionEvent;
@@ -14,7 +15,7 @@ public class LoginPageHandler implements ActionListener {
         } else if (event.getSource() == loginPage.forgotPassword) {
 
         } else if (event.getSource() == loginPage.signUp) {
-
+            new SignUpPage();
         }
     }
 }
