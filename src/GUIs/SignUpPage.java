@@ -1,6 +1,5 @@
 package GUIs;
 
-import listners.KeyHandler;
 import listners.SignUpPageHandler;
 
 import javax.swing.*;
