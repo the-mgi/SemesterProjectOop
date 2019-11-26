@@ -26,8 +26,18 @@ public class Playlist {
         this.songs = songs;
     }
 
-
     public void addInPlaylist(Song song) {
         songs.add(song);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        } else if (object instanceof Playlist) {
+            Playlist playlist = (Playlist) (object);
+            return playlist.getPlaylistName().equalsIgnoreCase(this.getPlaylistName());
+        }
+        return false;
     }
 }

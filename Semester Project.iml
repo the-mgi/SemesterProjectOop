@@ -17,5 +17,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="jmf-2.1.1e" level="project" />
   </component>
 </module>

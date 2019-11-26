@@ -1,6 +1,10 @@
 package classes;
 
-public class Song {
+import org.jetbrains.annotations.Contract;
+
+import java.io.Serializable;
+
+public class Song implements Serializable {
     private String name;
     private String lyricist;
     private String singer;
@@ -57,5 +61,27 @@ public class Song {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    @Override
+    public String toString() {
+        return "\nName: " + this.name + "\nLyricist: " + this.lyricist +
+                "\nSinger: " + singer + "\nNumberOfLikes: " + this.numberOfLikes +
+                "\nPath: " + this.path;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        } else if (object instanceof Song) {
+            Song song = (Song) (object);
+            return song.lyricist.equalsIgnoreCase(this.lyricist) &&
+                    song.name.equalsIgnoreCase(this.name) &&
+                    song.numberOfLikes == this.numberOfLikes &&
+                    song.path.equalsIgnoreCase(this.path) &&
+                    song.singer.equalsIgnoreCase(this.singer);
+        }
+        return false;
     }
 }

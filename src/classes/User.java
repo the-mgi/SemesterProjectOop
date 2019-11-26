@@ -14,6 +14,9 @@ public class User implements Serializable {
     private ArrayList<User> followers = new ArrayList<>();
     private ArrayList<User> thisUserFollowed = new ArrayList<>();
 
+    public User() {
+    }
+
     public User(String userName, String name, String emailAddress, String password) {
         this.userName = userName;
         this.name = name;
@@ -123,8 +126,7 @@ public class User implements Serializable {
     public boolean equals(Object object) {
         if (this == object) {
             return true;
-        }
-        if (object instanceof User) {
+        }else if (object instanceof User) {
             User user = (User)(object);
             return this.emailAddress.equalsIgnoreCase(user.emailAddress) && this.name.equalsIgnoreCase(user.name);
         }

@@ -17,8 +17,7 @@ public class SignUpPage extends JFrame {
     public static JButton signUp;
 
     public static boolean areHealthyFields = false;
-
-
+    
     public SignUpPage() {
         this.initializations();
         super.setTitle("SignUp Page");
@@ -38,17 +37,17 @@ public class SignUpPage extends JFrame {
     }
 
     private void initializations() {
-        username = new JLabel("Username");
-        name = new JLabel("Name");
-        emailAddress = new JLabel("Email Address");
-        password = new JLabel("Password");
-        code = new JLabel("VerificationCode");
-        registeredOrNot = new JLabel("");
-        usernameComment = new JLabel("");
-        nameComment = new JLabel("");
-        emailComment = new JLabel("");
-        passwordComment = new JLabel("");
-        codeComment = new JLabel("");
+        username = MainPage.getLabel("Username");
+        name = MainPage.getLabel("Name");
+        emailAddress = MainPage.getLabel("Email Address");
+        password = MainPage.getLabel("Password");
+        code = MainPage.getLabel("VerificationCode");
+        registeredOrNot = MainPage.getLabel("");
+        usernameComment = MainPage.getLabel("");
+        nameComment = MainPage.getLabel("");
+        emailComment = MainPage.getLabel("");
+        passwordComment = MainPage.getLabel("");
+        codeComment = MainPage.getLabel("");
 
         usernameField = new JTextField();
         emailField = new JTextField();
@@ -84,9 +83,5 @@ public class SignUpPage extends JFrame {
         panel.add(passwordField);
         panel.add(passwordComment);
         return panel;
-    }
-
-    public static void main(String[] args) {
-        new SignUpPage();
     }
 }

@@ -1,13 +1,12 @@
 package GUIs;
 
 import listners.LoginPageHandler;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
 
 
-public class loginPage extends JFrame {
+public class LoginPage extends JFrame {
     private static JLabel username, password;
 
     public static JTextField usernameField = new JTextField();
@@ -15,7 +14,7 @@ public class loginPage extends JFrame {
 
     public static JButton signIn, signUp, forgotPassword;
 
-    public loginPage() {
+    public LoginPage() {
         this.initializations();
 
         super.setSize(400, 400);
@@ -51,7 +50,7 @@ public class loginPage extends JFrame {
         return panel1;
     }
 
-    private JPanel getSpacing() {
+    public static JPanel getSpacing() {
         JPanel panel = new JPanel();
         panel.setSize(200, 200);
         return panel;
@@ -59,8 +58,8 @@ public class loginPage extends JFrame {
 
     private void initializations() {
         LoginPageHandler handler = new LoginPageHandler();
-        username = new JLabel("UserName");
-        password = new JLabel("Password");
+        username = MainPage.getLabel("UserName");
+        password = MainPage.getLabel("Password");
         signIn = new JButton("Sign In");
         signUp = new JButton("SignUp");
         forgotPassword = new JButton("ForgotPassword");
@@ -70,6 +69,6 @@ public class loginPage extends JFrame {
     }
 
     public static void main(String[] args) {
-        new loginPage();
+        new LoginPage();
     }
 }
