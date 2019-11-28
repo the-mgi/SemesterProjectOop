@@ -1,10 +1,12 @@
 package listners;
 
 import GUIs.ForgotPasswordPage;
+import GUIs.LoginPage;
 import GUIs.MainPage;
 import GUIs.SignUpPage;
 import classes.User;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,6 +17,7 @@ public class LoginPageHandler implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == signIn) {
+            frameToClose.dispose();
             new MainPage(new User());
 
         } else if (event.getSource() == forgotPassword) {

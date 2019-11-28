@@ -1,5 +1,9 @@
 package listners;
 
+import classes.User;
+
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,8 +11,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import static GUIs.MainPage.*;
+import static listView.TestListView.*;
 
-public class MainPageHandler extends MouseAdapter implements ActionListener {
+public class MainPageHandler extends MouseAdapter implements ActionListener, ListSelectionListener {
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        User user = (User)(list.getSelectedValue());
+        System.out.println(user);
+    }
 
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -53,6 +63,7 @@ public class MainPageHandler extends MouseAdapter implements ActionListener {
 
         } else if (event.getSource() == home) {
             home.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+        } else if (event.getSource() == list) {
 
         }
     }

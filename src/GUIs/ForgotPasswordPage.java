@@ -5,13 +5,13 @@ import listners.ForgotPageHandler;
 import javax.swing.*;
 import java.awt.*;
 
+import static classes.GeneralPurpose.getLabel;
+
 public class ForgotPasswordPage extends JFrame {
+
     private static JLabel username, emailAddress;
-
     public static JLabel status;
-
     public static JButton verify;
-
     public static JTextField usernameField, emailField;
 
     public ForgotPasswordPage() {
@@ -42,9 +42,9 @@ public class ForgotPasswordPage extends JFrame {
 
 
     public void initializations() {
-        username = MainPage.getLabel("Username");
-        emailAddress = MainPage.getLabel("Email Address");
-        status = MainPage.getLabel("");
+        username = getLabel("Username");
+        emailAddress = getLabel("Email Address");
+        status = getLabel("");
 
         verify = new JButton("Verify");
 

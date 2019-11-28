@@ -5,13 +5,15 @@ import listners.LoginPageHandler;
 import javax.swing.*;
 import java.awt.*;
 
+import static classes.GeneralPurpose.getLabel;
+
 
 public class LoginPage extends JFrame {
-    private static JLabel username, password;
 
+    private static JLabel username, password;
     public static JTextField usernameField = new JTextField();
     public static JPasswordField passwordField = new JPasswordField();
-
+    public static JFrame frameToClose;
     public static JButton signIn, signUp, forgotPassword;
 
     public LoginPage() {
@@ -30,7 +32,7 @@ public class LoginPage extends JFrame {
         super.add(getSpacing(), BorderLayout.NORTH);
         super.setVisible(true);
 
-
+        frameToClose = this;
     }
 
     private JPanel getPanel() {
@@ -42,7 +44,7 @@ public class LoginPage extends JFrame {
     }
 
     private JPanel getPanelOne() {
-        JPanel panel1 = new JPanel(new GridLayout(7, 7));
+        JPanel panel1 = new JPanel(new GridLayout(6, 6));
         panel1.add(username);
         panel1.add(usernameField);
         panel1.add(password);
@@ -58,8 +60,8 @@ public class LoginPage extends JFrame {
 
     private void initializations() {
         LoginPageHandler handler = new LoginPageHandler();
-        username = MainPage.getLabel("UserName");
-        password = MainPage.getLabel("Password");
+        username = getLabel("UserName");
+        password = getLabel("Password");
         signIn = new JButton("Sign In");
         signUp = new JButton("SignUp");
         forgotPassword = new JButton("ForgotPassword");

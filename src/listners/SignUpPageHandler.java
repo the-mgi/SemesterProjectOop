@@ -6,18 +6,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static GUIs.SignUpPage.signUp;
+import static GUIs.SignUpPage.*;
 
 public class SignUpPageHandler implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == signUp) {
-            if (SignUpPage.areHealthyFields) {
-
+            if (allHealthy()) {
+                registeredOrNot.setText("Valid Information Provided");
+                registeredOrNot.setForeground(new Color(31, 208, 0));
             } else {
-                SignUpPage.registeredOrNot.setText("Info Not Valid");
-                SignUpPage.registeredOrNot.setForeground(new Color(240, 29, 29));
+                registeredOrNot.setText("Info Not Valid");
+                registeredOrNot.setForeground(new Color(240, 29, 29));
 
             }
         }

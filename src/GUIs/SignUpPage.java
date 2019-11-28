@@ -5,19 +5,17 @@ import listners.SignUpPageHandler;
 import javax.swing.*;
 import java.awt.*;
 
+import static classes.GeneralPurpose.*;
+
 public class SignUpPage extends JFrame {
+
     private static JLabel username, name, emailAddress, password, code;
-
     public static JLabel usernameComment, nameComment, emailComment, passwordComment, codeComment, registeredOrNot;
-
     public static JTextField usernameField, emailField, nameField, codeField;
-
     public static JPasswordField passwordField = new JPasswordField();
-
     public static JButton signUp;
+    public static JProgressBar jProgressBar = new JProgressBar();
 
-    public static boolean areHealthyFields = false;
-    
     public SignUpPage() {
         this.initializations();
         super.setTitle("SignUp Page");
@@ -26,28 +24,24 @@ public class SignUpPage extends JFrame {
 
         super.setLayout(new BorderLayout());
 
-        JPanel panel = new JPanel();
-        panel.add(signUp);
-        panel.add(registeredOrNot);
-
         super.add(getMainPanel(), BorderLayout.CENTER);
-        super.add(panel, BorderLayout.SOUTH);
+        super.add(getV(), BorderLayout.SOUTH);
         super.setAlwaysOnTop(false);
         super.setVisible(true);
     }
 
     private void initializations() {
-        username = MainPage.getLabel("Username");
-        name = MainPage.getLabel("Name");
-        emailAddress = MainPage.getLabel("Email Address");
-        password = MainPage.getLabel("Password");
-        code = MainPage.getLabel("VerificationCode");
-        registeredOrNot = MainPage.getLabel("");
-        usernameComment = MainPage.getLabel("");
-        nameComment = MainPage.getLabel("");
-        emailComment = MainPage.getLabel("");
-        passwordComment = MainPage.getLabel("");
-        codeComment = MainPage.getLabel("");
+        username = getLabel("Username");
+        name = getLabel("Name");
+        emailAddress = getLabel("Email Address");
+        password = getLabel("Password");
+        code = getLabel("VerificationCode");
+        registeredOrNot = getLabel("");
+        usernameComment = getLabel("");
+        nameComment = getLabel("");
+        emailComment = getLabel("");
+        passwordComment = getLabel("");
+        codeComment = getLabel("");
 
         usernameField = new JTextField();
         emailField = new JTextField();
@@ -84,4 +78,25 @@ public class SignUpPage extends JFrame {
         panel.add(passwordComment);
         return panel;
     }
+
+    public static boolean allHealthy() {
+        return isEmailCorrect(emailField.getText()) && isNameCorrect(nameField.getText()) && isPasswordCorrect(passwordField.getText()) && isUsernameCorrect(usernameField.getText());
+    }
+
+    private Box getV() {
+        Box vBox = Box.createVerticalBox();
+        vBox.add(jProgressBar);
+
+        Box hBox = Box.createHorizontalBox();
+        hBox.add(Box.createHorizontalStrut(10));
+        hBox.add(signUp);
+        hBox.add(Box.createHorizontalStrut(10));
+        hBox.add(registeredOrNot);
+
+        vBox.add(Box.createVerticalStrut(20));
+        vBox.add(hBox);
+        return vBox;
+    }
+
+
 }
