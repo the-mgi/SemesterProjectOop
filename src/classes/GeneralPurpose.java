@@ -4,6 +4,12 @@ import listners.MainPageHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
+import static GUIs.LoginPage.frameToClose;
+import static GUIs.LoginPage.socket;
 
 public class GeneralPurpose {
     public static boolean isNameCorrect(String string) {
@@ -74,5 +80,27 @@ public class GeneralPurpose {
         jLabel.setFont(new Font(Font.SERIF, Font.BOLD, 20));
         jLabel.addMouseListener(new MainPageHandler());
         return jLabel;
+    }
+
+    public static void closeAppServerNotRunning() {
+        JFrame jFrame = new JFrame();
+        JOptionPane.showMessageDialog(jFrame, "Server Not Running");
+        jFrame.setVisible(true);
+        frameToClose.dispose();
+        System.exit(0);
+    }
+
+    public static User getUser() {
+        User user = null;
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+            Object object = objectInputStream.readObject();
+            if (object instanceof User) {
+                user = (User) (object);
+            }
+        } catch (IOException | ClassNotFoundException exception) {
+            System.out.println("Error in obtaining user from Server: " + exception.getMessage());
+        }
+        return user;
     }
 }

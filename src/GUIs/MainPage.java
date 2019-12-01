@@ -1,6 +1,5 @@
 package GUIs;
 
-import classes.Task;
 import classes.User;
 import listners.MainPageHandler;
 
@@ -19,8 +18,8 @@ public class MainPage extends JFrame {
     public static JButton settings;
 
     public MainPage(User user) {
-        Thread thread = new Thread(new Task(user));
-        thread.start(); //to initialize the list of the songs etc
+//        Thread thread = new Thread(new Task(user));
+//        thread.start(); //to initialize the list of the songs etc
 
         new Thread(() -> {
             this.initializations();

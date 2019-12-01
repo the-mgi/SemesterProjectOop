@@ -4,20 +4,28 @@ import listners.LoginPageHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.net.Socket;
 
 import static classes.GeneralPurpose.getLabel;
 
-
 public class LoginPage extends JFrame {
 
-    private static JLabel username, password;
+    private static JLabel username, password, serverStatus;
     public static JTextField usernameField = new JTextField();
     public static JPasswordField passwordField = new JPasswordField();
     public static JFrame frameToClose;
     public static JButton signIn, signUp, forgotPassword;
+    private static String ipAddress;
+    public static Socket socket = null;
+    public static boolean isServerUp = true;
+    public static boolean userPassVerified = false;
 
     public LoginPage() {
+        new SocketAndAddress();//for obtaining ip and port
         this.initializations();
+        createSocket();
 
         super.setSize(400, 400);
         super.setTitle("Login Page");
@@ -49,10 +57,16 @@ public class LoginPage extends JFrame {
         panel1.add(usernameField);
         panel1.add(password);
         panel1.add(passwordField);
+
+        Box box = Box.createHorizontalBox();
+        box.add(Box.createHorizontalStrut(20));
+        box.add(serverStatus);
+
+        panel1.add(box);
         return panel1;
     }
 
-    public static JPanel getSpacing() {
+    static JPanel getSpacing() {
         JPanel panel = new JPanel();
         panel.setSize(200, 200);
         return panel;
@@ -62,6 +76,7 @@ public class LoginPage extends JFrame {
         LoginPageHandler handler = new LoginPageHandler();
         username = getLabel("UserName");
         password = getLabel("Password");
+        serverStatus = getLabel("");
         signIn = new JButton("Sign In");
         signUp = new JButton("SignUp");
         forgotPassword = new JButton("ForgotPassword");
@@ -72,5 +87,40 @@ public class LoginPage extends JFrame {
 
     public static void main(String[] args) {
         new LoginPage();
+    }
+
+    private static void createSocket() {
+        try {
+            LoginPage.socket = new Socket(ipAddress, 8000);
+            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
+            int trueOrFalse = dataInputStream.readInt();
+            if (trueOrFalse == 1) {
+                up();
+            } else {
+                socket.close();
+                down();
+            }
+        } catch (IOException ex) {
+            down();
+        }
+    }
+
+    private static void up() {
+        serverStatus.setText("Server is UP :)");
+        serverStatus.setForeground(new Color(31, 208, 0));
+        isServerUp = true;
+    }
+
+    private static void down() {
+        serverStatus.setText("Server is Down :(");
+        isServerUp = false;
+        serverStatus.setForeground(Color.RED);
+        System.out.println("Exception While creating Client End Port");
+    }
+
+    class SocketAndAddress extends JFrame {
+        SocketAndAddress() {
+            ipAddress = JOptionPane.showInputDialog(this, "IP address of Server: ");
+        }
     }
 }
