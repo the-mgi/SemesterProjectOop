@@ -17,7 +17,7 @@ public class GeneralPurpose {
             return false;
         }
         char[] array = string.toCharArray();
-        for (char character: array) {
+        for (char character : array) {
             System.out.println(character);
             if (!Character.isAlphabetic(character) && !Character.isSpaceChar(character)) {
                 return false;
@@ -27,13 +27,13 @@ public class GeneralPurpose {
     }
 
     public static boolean isUsernameCorrect(String string) {
-        if(string.length() < 8) {
+        if (string.length() < 8) {
             return false;
         }
         char[] array = string.toCharArray();
         int number = 0;
         int alphabet = 0;
-        for (char character: array) {
+        for (char character : array) {
             if (Character.isAlphabetic(character)) {
                 alphabet += 1;
             }
@@ -95,6 +95,7 @@ public class GeneralPurpose {
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
             Object object = objectInputStream.readObject();
+            objectInputStream.close();
             if (object instanceof User) {
                 user = (User) (object);
             }
@@ -102,5 +103,24 @@ public class GeneralPurpose {
             System.out.println("Error in obtaining user from Server: " + exception.getMessage());
         }
         return user;
+    }
+
+    public static void sendCommandToServer(int id) {
+        try {
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeInt(id);
+        } catch (IOException exception) {
+            System.out.println("Exception Occurred while sending command to the server: " + exception.getMessage());
+        }
+    }
+
+    public static boolean checkForEmpty(JTextField textField) {
+        return !textField.getText().equalsIgnoreCase("");
+    }
+
+    public static JLabel getLabelOther(String label) {
+        JLabel jLabel = new JLabel(label);
+        jLabel.setFont(new Font(Font.SERIF, Font.BOLD, 20));
+        return jLabel;
     }
 }

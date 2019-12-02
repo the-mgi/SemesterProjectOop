@@ -1,5 +1,6 @@
 package GUIs;
 
+import classes.ActionConstants;
 import listners.LoginPageHandler;
 
 import javax.swing.*;
@@ -8,11 +9,11 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import static classes.GeneralPurpose.getLabel;
+import static classes.GeneralPurpose.getLabelOther;
 
-public class LoginPage extends JFrame {
+public class LoginPage extends JFrame implements ActionConstants {
 
-    private static JLabel username, password, serverStatus;
+    public static JLabel username, password, serverStatus, usernamePasswordStatus;
     public static JTextField usernameField = new JTextField();
     public static JPasswordField passwordField = new JPasswordField();
     public static JFrame frameToClose;
@@ -61,6 +62,9 @@ public class LoginPage extends JFrame {
         Box box = Box.createHorizontalBox();
         box.add(Box.createHorizontalStrut(20));
         box.add(serverStatus);
+        box.add(Box.createHorizontalStrut(20));
+        box.add(usernamePasswordStatus);
+
 
         panel1.add(box);
         return panel1;
@@ -74,9 +78,10 @@ public class LoginPage extends JFrame {
 
     private void initializations() {
         LoginPageHandler handler = new LoginPageHandler();
-        username = getLabel("UserName");
-        password = getLabel("Password");
-        serverStatus = getLabel("");
+        username = getLabelOther("UserName");
+        password = getLabelOther("Password");
+        serverStatus = getLabelOther("");
+        usernamePasswordStatus = getLabelOther("");
         signIn = new JButton("Sign In");
         signUp = new JButton("SignUp");
         forgotPassword = new JButton("ForgotPassword");
@@ -91,7 +96,7 @@ public class LoginPage extends JFrame {
 
     private static void createSocket() {
         try {
-            LoginPage.socket = new Socket(ipAddress, 8000);
+            LoginPage.socket = new Socket(ipAddress, 8080);
             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
             int trueOrFalse = dataInputStream.readInt();
             if (trueOrFalse == 1) {

@@ -7,12 +7,13 @@ import classes.ActionConstants;
 import classes.Task;
 import classes.User;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataOutputStream;
 
 import static GUIs.LoginPage.*;
-import static classes.GeneralPurpose.*;
+import static classes.GeneralPurpose.closeAppServerNotRunning;
+import static classes.GeneralPurpose.getUser;
 
 public class LoginPageHandler implements ActionListener, ActionConstants {
 
@@ -34,7 +35,13 @@ public class LoginPageHandler implements ActionListener, ActionConstants {
                     if (user != null) {
                         new MainPage(user);
                     }
+                    usernamePasswordStatus.setText("Username and Password has been  verified form the server");
+                    usernamePasswordStatus.setForeground(new Color(31, 208, 0));
+                } else {
+                    usernamePasswordStatus.setText("Record Not Found");
+                    usernamePasswordStatus.setForeground(Color.RED);
                 }
+
             }
 
         } else if (event.getSource() == forgotPassword) {
@@ -52,6 +59,4 @@ public class LoginPageHandler implements ActionListener, ActionConstants {
             }
         }
     }
-
-
 }

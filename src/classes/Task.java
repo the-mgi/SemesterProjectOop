@@ -2,6 +2,7 @@ package classes;
 
 import GUIs.LoginPage;
 
+import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -22,7 +23,12 @@ public class Task implements Runnable, ActionConstants {
     @Override
     public void run() {
         if (function == SIGN_IN) {
-            sendSignInInfo();
+            if (checkForEmpty(usernameField) && checkForEmpty(passwordField)) {
+                sendCommandToServer(SIGN_IN);
+                sendSignInInfo();
+            } else {
+
+            }
         } else if (function == SIGN_UP) {
 
         } else if (function == FORGOT_PASSWORD) {
@@ -54,7 +60,4 @@ public class Task implements Runnable, ActionConstants {
             userPassVerified = false;
         }
     }
-
-
-
 }
