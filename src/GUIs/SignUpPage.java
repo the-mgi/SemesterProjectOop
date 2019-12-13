@@ -97,4 +97,8 @@ public class SignUpPage extends JFrame {
         vBox.add(hBox);
         return vBox;
     }
+
+    public static void main(String[] args) {
+        new SignUpPage();
+    }
 }

@@ -51,7 +51,8 @@ public class FromToServer implements Runnable, ActionConstants {
 
     /**
      *at first find if the folder of the specified username exists
-     * if yes then match password from @param username
+     * if yes then match password from
+     * @param username
      * else return false and send it to sendingBackSignInRequest() for sending back reply to the client
      */
     private static boolean isUsernamePasswordTrue(String username, String password) {
@@ -108,19 +109,34 @@ public class FromToServer implements Runnable, ActionConstants {
         }
     }
 
-
-
-    private static void addUser(String name, String username, String password, String emailAddress) {
+    private static void addUser() {
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+            Object object = objectInputStream.readObject();
+            if (object instanceof User) {
+                User user = (User)(object);
+                File file = new File("E:\\Server\\Users\\" + user.getUserName());
+                boolean isDirectoryCreated = file.mkdir();
+                if (isDirectoryCreated) {
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(new File(file.getAbsolutePath() + "\\" + user.getUserName())));
+                    objectOutputStream.writeObject(user);
+                    objectOutputStream.close();
+                }
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "Exception Occurred in FromToServer in addUser!");
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "ClassNotFoundException Occurred in FromToServer in addUser!\nUser not updated");
+        }
 
     } //stub
-
-
 
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8080);
         ServerPage();
         while (true) {
             Socket socket = serverSocket.accept();
+            System.out.println("socket accepted");
             Thread thread = new Thread(new FromToServer(socket));
             thread.start();
         }
@@ -132,7 +148,7 @@ public class FromToServer implements Runnable, ActionConstants {
         if (function == SIGN_IN) {
             sendingBackSignInRequest();
         } else if (function == SIGN_UP) {
-
+            addUser();
         } else if (function == FORGOT_PASSWORD) {
 
         } else if (function == PASSWORD_CHANGE) {
@@ -188,5 +204,4 @@ public class FromToServer implements Runnable, ActionConstants {
             System.out.println("Error in establishing Server");
         }
     }
-
 }

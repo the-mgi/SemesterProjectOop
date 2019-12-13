@@ -4,7 +4,9 @@ import classes.User;
 import listners.MainPageHandler;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,8 +20,6 @@ public class MainPage extends JFrame {
     public static JButton settings;
 
     public MainPage(User user) {
-//        Thread thread = new Thread(new Task(user));
-//        thread.start(); //to initialize the list of the songs etc
 
         new Thread(() -> {
             this.initializations();
@@ -35,10 +35,12 @@ public class MainPage extends JFrame {
             hBox.add(settings);
 
 
-            super.add(getVbox(), BorderLayout.WEST);
+            super.add(getVBox(), BorderLayout.WEST);
             super.add(hBox, BorderLayout.NORTH);
             try {
-                super.add(getScrollPane(), BorderLayout.CENTER);
+                JPanel panel = new JPanel();
+                panel.add(getScrollPane());
+                super.add(panel, BorderLayout.CENTER);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -47,35 +49,25 @@ public class MainPage extends JFrame {
     }
 
     private JScrollPane getScrollPane() throws IOException {
-        JScrollPane scrollPane = new JScrollPane();
-        JPanel panel = new JPanel();
+        JScrollPane jScrollPane = new JScrollPane();
+        JTable table = new JTable();
+        DefaultTableModel defaultTableModel = (DefaultTableModel) table.getModel();
 
-        Box hBox = Box.createHorizontalBox();
+        File file = new File("E:\\Songs\\Songs\\ClipGrab\\New folder\\New folder\\New folder\\New folder");
+        File[] array = file.listFiles();
 
-        JList<User> userJList = new JList<>();
-        DefaultListModel<User> listModel = new DefaultListModel<User>();
+        Object[] arrayObjects = new Object[3];
 
-        userJList.setModel(listModel);
-
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("E:\\CS\\Semester III\\OOP\\Semester Project\\src\\Files\\object.dat"));
-
-        try {
-            while (true) {
-                Object object = objectInputStream.readObject();
-                if (object instanceof User) {
-                    User user = (User) (object);
-                    listModel.addElement(user);
-                }
+        if (array != null) {
+            for (int i = 0; i < array.length; i++) {
+                File gotFileFromArray = array[i];
+                arrayObjects[0] = gotFileFromArray.getName();
+                arrayObjects[1] = gotFileFromArray.getAbsolutePath();
+                arrayObjects[2] = gotFileFromArray.getParentFile();
+                defaultTableModel.addRow(arrayObjects);
             }
-        } catch (IOException | ClassNotFoundException e) {
-            objectInputStream.close();
-            System.out.println(e.toString());
         }
-
-        hBox.add(userJList);
-        panel.add(hBox);
-        scrollPane.add(panel);
-        return scrollPane;
+        return jScrollPane;
     }
 
     private void initializations() {
@@ -90,7 +82,7 @@ public class MainPage extends JFrame {
         settings.addActionListener(new MainPageHandler());
     }
 
-    private Box getVbox() {
+    private Box getVBox() {
         Box vBox = Box.createVerticalBox();
         vBox.add(Box.createVerticalStrut(270));
         vBox.add(home);
@@ -106,4 +98,6 @@ public class MainPage extends JFrame {
     public static void main(String[] args) {
         new MainPage(new User());
     }
+
+
 }
